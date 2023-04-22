@@ -37,6 +37,7 @@ namespace CondominiumParkingApi.Infrastructure.IoC.DependencyInjections
         {
             services.AddScoped<IParkedRepository, ParkedRepository>();
             services.AddScoped<IParkingSpaceRepository, ParkingSpaceRepository>();
+            services.AddScoped<IApartmentVehicleRepository, ApartmentVehicleRepository>();
         }
     }
 }

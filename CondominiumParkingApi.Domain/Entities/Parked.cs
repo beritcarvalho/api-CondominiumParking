@@ -13,21 +13,17 @@
         public DateTime In_Date { get; private set; }
         public DateTime? Out_Date { get; private set; }
 
-        
-        private DateTime deadline;
-        public DateTime Deadline
-        {
-            get { return deadline; }
-            private set { deadline = In_Date.AddHours(48); }
-        }
 
-        public TimeSpan? Time_Exceeded { get; private set; }
+        public DateTime Deadline { get; private set; }
+
+        public double? Total_Exceeded_Minutes { get; private set; }
         public bool Active { get; private set; }    
 
 
         public void Park()
         {
             In_Date = DateTime.Now;
+            Deadline = In_Date.AddHours(48);
             Active = true;
         }
 
@@ -36,9 +32,9 @@
             Out_Date = DateTime.Now;
             Active = false;
 
-            if (Deadline > DateTime.Now)
-            {
-                Time_Exceeded = DateTime.Now - deadline;
+            if (DateTime.Now > Deadline)
+            {                
+                Total_Exceeded_Minutes = (DateTime.Now - Deadline).TotalMinutes;
             }
         }
     }
