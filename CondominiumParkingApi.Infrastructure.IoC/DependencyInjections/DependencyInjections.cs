@@ -1,4 +1,7 @@
-﻿using CondominiumParkingApi.Domain.Interfaces;
+﻿using CondominiumParkingApi.Applications.Interfaces;
+using CondominiumParkingApi.Applications.Services;
+using CondominiumParkingApi.Domain.Entities;
+using CondominiumParkingApi.Domain.Interfaces;
 using CondominiumParkingApi.Infrastructure.Data.Contexts;
 using CondominiumParkingApi.Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +29,9 @@ namespace CondominiumParkingApi.Infrastructure.IoC.DependencyInjections
 
         private static void AddServices(IServiceCollection services)
         {
+            services.AddScoped<IParkedService, ParkedService>();
+            services.AddScoped<IParkingSpaceService, ParkingSpaceService>();
+            services.AddScoped<ILimitExceededService, LimitExceededService>();
         }
 
         private static void AddRepository(IServiceCollection services)

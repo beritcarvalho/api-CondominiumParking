@@ -1,4 +1,4 @@
-﻿using CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations;
+﻿using CondominiumParkingApi.Infrastructure.Data.Configurations.EntityConfigurations;
 using CondominiumParkingApi.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
