@@ -35,6 +35,9 @@ namespace CondominiumParkingApi.Infrastructure.Data.Contexts
             builder.ApplyConfiguration(new VehicleModelConfiguration());
             builder.ApplyConfiguration(new BrandConfiguration());
             builder.ApplyConfiguration(new ApartmentVehicleConfiguration());
+            builder.ApplyConfiguration(new ParkedConfiguration());
+            builder.ApplyConfiguration(new ParkingSpaceConfiguration());
+            builder.ApplyConfiguration(new LimitExceededConfiguration());
         }
     }
 }

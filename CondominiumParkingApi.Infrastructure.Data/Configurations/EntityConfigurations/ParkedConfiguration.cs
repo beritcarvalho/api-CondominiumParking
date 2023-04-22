@@ -23,14 +23,14 @@ namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
 
             builder
                 .HasOne(parked => parked.ApartmentVehicle)
-                .WithOne(apartmentVehicle => apartmentVehicle.Parked)
-                .HasForeignKey<Parked>(parked => parked.ApartmentVehicleId)
+                .WithMany(apartmentVehicle => apartmentVehicle.Parkeds)
+                .HasForeignKey(parked => parked.ApartmentVehicleId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder
                 .HasOne(parked => parked.ParkingSpace)
-                .WithOne(parkingSpace => parkingSpace.Parked)
-                .HasForeignKey<Parked>(parked => parked.ParkingSpaceId)
+                .WithMany(parkingSpace => parkingSpace.Parkeds)
+                .HasForeignKey(parked => parked.ParkingSpaceId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             #endregion
@@ -75,7 +75,11 @@ namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
 
             #region Indexes         
 
-            builder.HasIndex(parked => new { parked.ApartmentVehicleId, parked.ParkingSpaceId }, "IX_Vehicle_ParkingSpace_Active")
+            builder.HasIndex(parked => parked.ApartmentVehicleId, "IX_Vehicle_Active")
+                .HasFilter("[Active] = 1")
+                .IsUnique();
+
+            builder.HasIndex(parked => parked.ParkingSpaceId, "IX_ParkingSpace_Active")
                 .HasFilter("[Active] = 1")
                 .IsUnique();
 
@@ -83,7 +87,7 @@ namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
 
             #region PopulationData
 
-           
+
 
             #endregion
         }
