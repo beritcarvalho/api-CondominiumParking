@@ -2,7 +2,7 @@
 
 namespace CondominiumParkingApi.Applications.ViewModels
 {
-    public class ParkedViewModel
+    public class ParkingSpaceViewModel
     {
         public int Id { get; set; }
         public int Space { get; set; }
