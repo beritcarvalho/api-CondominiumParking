@@ -4,11 +4,10 @@ using CondominiumParkingApi.Infrastructure.Data.Contexts;
 
 namespace CondominiumParkingApi.Infrastructure.Data.Repositories
 {
-    public class ParkedRepository : BaseRepository<Parked>, IParkedRepository
+    public class ParkingSpaceRepository : BaseRepository<ParkingSpace>, IParkingSpaceRepository
     {
-        public ParkedRepository(DataBaseContext context) : base(context)
+        public ParkingSpaceRepository(DataBaseContext context) : base(context)
         {
         }
     }
-
 }

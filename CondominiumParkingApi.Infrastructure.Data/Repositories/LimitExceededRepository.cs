@@ -4,11 +4,10 @@ using CondominiumParkingApi.Infrastructure.Data.Contexts;
 
 namespace CondominiumParkingApi.Infrastructure.Data.Repositories
 {
-    public class ParkedRepository : BaseRepository<Parked>, IParkedRepository
+    public class LimitExceededRepository : BaseRepository<LimitExceeded>, ILimitExceededRepository
     {
-        public ParkedRepository(DataBaseContext context) : base(context)
+        public LimitExceededRepository(DataBaseContext context) : base(context)
         {
         }
     }
-
 }

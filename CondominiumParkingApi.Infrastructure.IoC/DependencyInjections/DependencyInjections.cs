@@ -31,6 +31,8 @@ namespace CondominiumParkingApi.Infrastructure.IoC.DependencyInjections
         private static void AddRepository(IServiceCollection services)
         {
             services.AddScoped<IParkedRepository, ParkedRepository>();
+            services.AddScoped<IParkingSpaceRepository, ParkingSpaceRepository>();
+            services.AddScoped<ILimitExceededRepository, LimitExceededRepository>();
         }
     }
 }
