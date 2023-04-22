@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
+namespace CondominiumParkingApi.Infrastructure.Data.Configurations.EntityConfigurations
 {
     public class ApartmentVehicleConfiguration : IEntityTypeConfiguration<ApartmentVehicle>
     {
@@ -36,7 +36,7 @@ namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
                 .HasOne(apartVehi => apartVehi.Vehicle)
                 .WithMany(vehicle => vehicle.ApartmentsVehicles)
                 .HasForeignKey(apartVehi => apartVehi.VehicleId)
-                .OnDelete(DeleteBehavior.NoAction); 
+                .OnDelete(DeleteBehavior.NoAction);
 
             #endregion
 
@@ -65,7 +65,7 @@ namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
                 .HasDefaultValueSql("0")
                 .HasComment("Indica se o veiculo está ativo");
 
-           
+
             builder.Property(apartVehi => apartVehi.Active_Date)
                 .HasColumnName("Active_Date")
                 .HasColumnType("DATETIME")
