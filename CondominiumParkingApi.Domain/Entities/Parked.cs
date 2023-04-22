@@ -1,6 +1,6 @@
 ﻿namespace CondominiumParkingApi.Domain.Entities
 {
-    public class Parking
+    public class Parked
     {
         public decimal Id { get; set; }
         public int ParkingSpaceId { get; set; }
