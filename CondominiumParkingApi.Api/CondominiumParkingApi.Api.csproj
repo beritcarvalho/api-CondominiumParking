@@ -10,4 +10,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CondominiumParkingApi.Infrastructure.Data\CondominiumParkingApi.Infrastructure.Data.csproj" />
+    <ProjectReference Include="..\CondominiumParkingApi.Infrastructure.IoC\CondominiumParkingApi.Infrastructure.IoC.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CondominiumParkingApi.Domain\CondominiumParkingApi.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
