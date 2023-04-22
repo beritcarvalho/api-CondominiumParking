@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
+namespace CondominiumParkingApi.Infrastructure.Data.Configurations.EntityConfigurations
 {
     public class VehicleConfiguration : IEntityTypeConfiguration<Vehicle>
     {
@@ -25,7 +25,7 @@ namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
             #endregion
 
             #region ForeignKey
-                       
+
             builder
                 .HasOne(vehicle => vehicle.VehicleModel)
                 .WithMany(model => model.Vehicles)
@@ -78,7 +78,7 @@ namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
                 .HasColumnName("Last_Update_Date")
                 .HasColumnType("DATETIME")
                 .HasDefaultValueSql("GETDATE()")
-                .HasComment("Ultima atualização do cadastro do veículo");        
+                .HasComment("Ultima atualização do cadastro do veículo");
 
             #endregion
 

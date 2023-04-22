@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
+namespace CondominiumParkingApi.Infrastructure.Data.Configurations.EntityConfigurations
 {
     public class BrandConfiguration : IEntityTypeConfiguration<Brand>
     {

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
+namespace CondominiumParkingApi.Infrastructure.Data.Configurations.EntityConfigurations
 {
     public class ParkedConfiguration : IEntityTypeConfiguration<Parked>
     {
@@ -60,9 +60,9 @@ namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
                 .HasDefaultValueSql("GETDATE()")
                 .HasComment("Data e hora da entrada do Veículo");
 
-            builder.Property(parked => parked.Out_Date)                
+            builder.Property(parked => parked.Out_Date)
                 .HasColumnName("Out_Date")
-                .HasColumnType("DATETIME")                
+                .HasColumnType("DATETIME")
                 .HasComment("Data e hora da saída do Veículo");
 
             builder.Property(parked => parked.Active)

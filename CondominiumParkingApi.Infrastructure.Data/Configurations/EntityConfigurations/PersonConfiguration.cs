@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Security.Principal;
 
-namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
+namespace CondominiumParkingApi.Infrastructure.Data.Configurations.EntityConfigurations
 {
     public class PersonConfiguration : IEntityTypeConfiguration<Person>
     {

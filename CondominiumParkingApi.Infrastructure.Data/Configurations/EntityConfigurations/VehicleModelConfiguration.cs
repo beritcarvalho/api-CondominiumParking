@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
+namespace CondominiumParkingApi.Infrastructure.Data.Configurations.EntityConfigurations
 {
     public class VehicleModelConfiguration : IEntityTypeConfiguration<VehicleModel>
     {
@@ -20,17 +20,17 @@ namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
 
             builder
                 .HasKey(vModel => vModel.Id)
-                .HasName("PK_Vehicle_Model");          
+                .HasName("PK_Vehicle_Model");
 
             #endregion
 
             #region ForeignKey
 
-             builder
-                .HasOne(VehicleModel => VehicleModel.Brand)
-                .WithMany(brand => brand.Models)
-                .HasForeignKey(VehicleModel => VehicleModel.BrandId)
-                .OnDelete(DeleteBehavior.NoAction);
+            builder
+               .HasOne(VehicleModel => VehicleModel.Brand)
+               .WithMany(brand => brand.Models)
+               .HasForeignKey(VehicleModel => VehicleModel.BrandId)
+               .OnDelete(DeleteBehavior.NoAction);
 
             #endregion
 

@@ -6,6 +6,6 @@
         public int Space { get; set; }
         public bool Handicap { get; set; }
 
-        public List<Parked> Parkeds { get; set; }
+        public ICollection<Parked> Parkeds { get; set; }
     }
 }

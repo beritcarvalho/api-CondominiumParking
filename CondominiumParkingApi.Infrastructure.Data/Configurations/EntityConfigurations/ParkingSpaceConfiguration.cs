@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
+namespace CondominiumParkingApi.Infrastructure.Data.Configurations.EntityConfigurations
 {
     public class ParkingSpaceConfiguration : IEntityTypeConfiguration<ParkingSpace>
     {
@@ -53,7 +53,7 @@ namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
 
             #region PopulationData
 
-           
+
 
             #endregion
         }
