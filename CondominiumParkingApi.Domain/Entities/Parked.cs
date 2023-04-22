@@ -10,11 +10,36 @@
         public decimal ApartmentVehicleId { get; set; }
         public ApartmentVehicle ApartmentVehicle { get; set; }
 
-        public DateTime In_Date { get; set; }
-        public DateTime? Out_Date { get; set; }
-        public bool Active { get; set; }
+        public DateTime In_Date { get; private set; }
+        public DateTime? Out_Date { get; private set; }
 
-        public LimitExceeded LimitExceeded { get; set; }
+        
+        private DateTime deadline;
+        public DateTime Deadline
+        {
+            get { return deadline; }
+            private set { deadline = In_Date.AddHours(48); }
+        }
 
+        public TimeSpan? Time_Exceeded { get; private set; }
+        public bool Active { get; private set; }    
+
+
+        public void Park()
+        {
+            In_Date = DateTime.Now;
+            Active = true;
+        }
+
+        public void Unpark()
+        {
+            Out_Date = DateTime.Now;
+            Active = false;
+
+            if (Deadline > DateTime.Now)
+            {
+                Time_Exceeded = DateTime.Now - deadline;
+            }
+        }
     }
 }

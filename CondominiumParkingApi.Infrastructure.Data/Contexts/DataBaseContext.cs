@@ -23,7 +23,6 @@ namespace CondominiumParkingApi.Infrastructure.Data.Contexts
         public DbSet<ApartmentVehicle> ApartmentsVehicles { get; set; }
         public DbSet<Parked> Parkeds { get; set; }
         public DbSet<ParkingSpace> ParkingSpaces { get; set; }
-        public DbSet<LimitExceeded> LimitsExceeded { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -37,7 +36,6 @@ namespace CondominiumParkingApi.Infrastructure.Data.Contexts
             builder.ApplyConfiguration(new ApartmentVehicleConfiguration());
             builder.ApplyConfiguration(new ParkedConfiguration());
             builder.ApplyConfiguration(new ParkingSpaceConfiguration());
-            builder.ApplyConfiguration(new LimitExceededConfiguration());
         }
     }
 }
