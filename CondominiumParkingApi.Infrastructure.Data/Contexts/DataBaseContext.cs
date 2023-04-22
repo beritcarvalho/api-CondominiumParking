@@ -1,4 +1,5 @@
-﻿using CondominiumParkingApi.Domain.Entities;
+﻿using CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations;
+using CondominiumParkingApi.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace CondominiumParkingApi.Infrastructure.Data.Contexts
@@ -13,7 +14,6 @@ namespace CondominiumParkingApi.Infrastructure.Data.Contexts
             : base(options)
         {
         }
-
         public DbSet<Person> People { get; set; }
         public DbSet<Apartment> Apartments { get; set; }
         public DbSet<Block> Blocks { get; set; }
@@ -24,5 +24,17 @@ namespace CondominiumParkingApi.Infrastructure.Data.Contexts
         public DbSet<Parked> Parkeds { get; set; }
         public DbSet<ParkingSpace> ParkingSpaces { get; set; }
         public DbSet<LimitExceeded> LimitsExceeded { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.ApplyConfiguration(new PersonConfiguration());
+            builder.ApplyConfiguration(new ApartmentConfiguration());
+            builder.ApplyConfiguration(new BlockConfiguration());
+            builder.ApplyConfiguration(new VehicleConfiguration());
+            builder.ApplyConfiguration(new VehicleModelConfiguration());
+            builder.ApplyConfiguration(new BrandConfiguration());
+            builder.ApplyConfiguration(new ApartmentVehicleConfiguration());
+        }
     }
 }
