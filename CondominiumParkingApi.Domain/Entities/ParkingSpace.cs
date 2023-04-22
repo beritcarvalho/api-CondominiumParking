@@ -5,5 +5,7 @@
         public int Id { get; set; }
         public int Spot { get; set; }
         public bool Handicap { get; set; }
+
+        public Parked Parked { get; set; }
     }
 }

@@ -13,5 +13,7 @@
         public bool Active { get; set; }
         public DateTime? Active_Date { get; set; }
         public DateTime? Inactive_Date { get; set; }
+
+        public Parked Parked { get; set; }
     }
 }
