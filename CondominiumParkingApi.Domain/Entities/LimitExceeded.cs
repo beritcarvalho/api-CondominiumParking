@@ -7,6 +7,7 @@
         public decimal ParkedId { get; set; }
         public Parked Parked { get; set; }
 
+        public DateTime Deadline { get; set; }
         public TimeSpan Time_Exceeded { get; set; }
     }
 }

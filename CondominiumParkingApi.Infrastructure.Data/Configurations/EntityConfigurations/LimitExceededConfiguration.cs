@@ -42,6 +42,12 @@ namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
                 .IsRequired()
                 .HasComment("Chave da tabela de Parked");
 
+            builder.Property(person => person.Deadline)
+                .IsRequired()
+                .HasColumnName("Deadline")
+                .HasColumnType("DATETIME")
+                .HasComment("Prazo para retirada do veículo");
+
             builder.Property(limitExceeded => limitExceeded.Time_Exceeded)
                 .IsRequired()
                 .HasColumnName("Time_Exceeded")
