@@ -14,6 +14,6 @@
         public DateTime? Active_Date { get; set; }
         public DateTime? Inactive_Date { get; set; }
 
-        public List<Parked> Parkeds { get; set; }
+        public ICollection<Parked> Parkeds { get; set; }
     }
 }
