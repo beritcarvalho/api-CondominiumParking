@@ -28,7 +28,7 @@ namespace CondominiumParkingApi.Api.Controllers
             }
             catch (Exception exception)
             {
-                return StatusCode(500);
+                return StatusCode(500, exception.Message);
             }
         }
     }
