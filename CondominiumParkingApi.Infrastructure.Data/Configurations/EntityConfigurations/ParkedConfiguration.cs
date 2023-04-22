@@ -45,10 +45,12 @@ namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
 
             builder.Property(parked => parked.ParkingSpaceId)
                 .IsRequired()
+                .HasColumnType("INT")
                 .HasComment("Chave da tabela de ParkingSpace");
 
             builder.Property(parked => parked.ApartmentVehicleId)
                 .IsRequired()
+                .HasColumnType("DECIMAL(6,0)")
                 .HasComment("Chave da tabela de ApartmentVehicle");
 
             builder.Property(parked => parked.In_Date)
