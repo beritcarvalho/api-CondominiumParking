@@ -16,7 +16,18 @@ namespace CondominiumParkingApi.Infrastructure.IoC.DependencyInjections
 
             #endregion
 
+            AddServices(services);
+            AddRepository(services);
+
             return services;
+        }
+
+        private static void AddServices(IServiceCollection services)
+        {
+        }
+
+        private static void AddRepository(IServiceCollection services)
+        {
         }
     }
 }
