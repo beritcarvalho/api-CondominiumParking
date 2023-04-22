@@ -1,4 +1,8 @@
+using CondominiumParkingApi.Infrastructure.IoC.DependencyInjections;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDependencyInjection(builder.Configuration);
 
 // Add services to the container.
 
