@@ -1,4 +1,6 @@
-﻿using CondominiumParkingApi.Infrastructure.Data.Contexts;
+﻿using CondominiumParkingApi.Domain.Interfaces;
+using CondominiumParkingApi.Infrastructure.Data.Contexts;
+using CondominiumParkingApi.Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,6 +30,7 @@ namespace CondominiumParkingApi.Infrastructure.IoC.DependencyInjections
 
         private static void AddRepository(IServiceCollection services)
         {
+            services.AddScoped<IParkedRepository, ParkedRepository>();
         }
     }
 }
