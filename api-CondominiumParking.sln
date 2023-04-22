@@ -3,10 +3,42 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CondominiumParkingApi.Api", "CondominiumParkingApi.Api\CondominiumParkingApi.Api.csproj", "{A8886031-7935-477D-94C1-4F052D006DA8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CondominiumParkingApi.Applications", "CondominiumParkingApi.Applications\CondominiumParkingApi.Applications.csproj", "{6202776C-679D-4AA6-BD01-C611CF6BC464}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CondominiumParkingApi.Domain", "CondominiumParkingApi.Domain\CondominiumParkingApi.Domain.csproj", "{0D38BB31-61B6-4D49-94C6-78EF1DEB9EED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CondominiumParkingApi.Infrastructure.Data", "CondominiumParkingApi.Infrastructure.Data\CondominiumParkingApi.Infrastructure.Data.csproj", "{67DB1E27-5CB5-4C63-9144-5E18F1B573C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CondominiumParkingApi.Infrastructure.IoC", "CondominiumParkingApi.Infrastructure.IoC\CondominiumParkingApi.Infrastructure.IoC.csproj", "{4B11826B-3D99-47F5-8ADE-2C7F29261D7D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A8886031-7935-477D-94C1-4F052D006DA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8886031-7935-477D-94C1-4F052D006DA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8886031-7935-477D-94C1-4F052D006DA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8886031-7935-477D-94C1-4F052D006DA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6202776C-679D-4AA6-BD01-C611CF6BC464}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6202776C-679D-4AA6-BD01-C611CF6BC464}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6202776C-679D-4AA6-BD01-C611CF6BC464}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6202776C-679D-4AA6-BD01-C611CF6BC464}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D38BB31-61B6-4D49-94C6-78EF1DEB9EED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D38BB31-61B6-4D49-94C6-78EF1DEB9EED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D38BB31-61B6-4D49-94C6-78EF1DEB9EED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D38BB31-61B6-4D49-94C6-78EF1DEB9EED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67DB1E27-5CB5-4C63-9144-5E18F1B573C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67DB1E27-5CB5-4C63-9144-5E18F1B573C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67DB1E27-5CB5-4C63-9144-5E18F1B573C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67DB1E27-5CB5-4C63-9144-5E18F1B573C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B11826B-3D99-47F5-8ADE-2C7F29261D7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B11826B-3D99-47F5-8ADE-2C7F29261D7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B11826B-3D99-47F5-8ADE-2C7F29261D7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B11826B-3D99-47F5-8ADE-2C7F29261D7D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
