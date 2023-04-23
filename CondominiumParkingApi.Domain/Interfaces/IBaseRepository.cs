@@ -6,6 +6,7 @@
         Task<T> GetByIdAsync(int id);
         Task<T> GetByIdAsync(decimal entity);
         Task<T> InsertAsync(T entity);
+        Task<List<T>> InsertRangeAsync(List<T> entities);        
         Task<T> UpdateAsync(T entity);
         Task<List<T>> UpdateAsync(List<T> entities);
         Task RemoveAsync(T entity);

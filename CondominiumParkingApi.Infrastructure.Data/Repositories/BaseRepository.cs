@@ -24,6 +24,13 @@ namespace CondominiumParkingApi.Infrastructure.Data.Repositories
             return entity;
         }
 
+        public async Task<List<T>> InsertRangeAsync(List<T> entities)
+        {
+            Context.Set<T>().AddRangeAsync(entities);
+            await Context.SaveChangesAsync();
+            return entities;
+        }
+
         //Read
         public T GetById(int id)
         {

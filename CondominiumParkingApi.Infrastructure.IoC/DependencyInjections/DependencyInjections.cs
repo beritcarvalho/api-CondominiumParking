@@ -31,14 +31,13 @@ namespace CondominiumParkingApi.Infrastructure.IoC.DependencyInjections
         {
             services.AddScoped<IParkedService, ParkedService>();
             services.AddScoped<IParkingSpaceService, ParkingSpaceService>();
-            services.AddScoped<ILimitExceededService, LimitExceededService>();
         }
 
         private static void AddRepository(IServiceCollection services)
         {
             services.AddScoped<IParkedRepository, ParkedRepository>();
             services.AddScoped<IParkingSpaceRepository, ParkingSpaceRepository>();
-            services.AddScoped<ILimitExceededRepository, LimitExceededRepository>();
+            services.AddScoped<IApartmentVehicleRepository, ApartmentVehicleRepository>();
         }
     }
 }

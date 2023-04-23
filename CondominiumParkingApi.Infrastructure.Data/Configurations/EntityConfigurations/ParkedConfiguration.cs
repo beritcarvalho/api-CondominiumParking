@@ -65,11 +65,23 @@ namespace CondominiumParkingApi.Infrastructure.Data.Configurations.EntityConfigu
                 .HasColumnType("DATETIME")
                 .HasComment("Data e hora da saída do Veículo");
 
+            builder.Property(person => person.Deadline)                
+                .IsRequired()
+                .HasColumnName("Deadline")
+                .HasColumnType("DATETIME")
+                .HasComment("Prazo para retirada do veículo");
+
+            builder.Property(limitExceeded => limitExceeded.Total_Exceeded_Minutes)                
+                .HasColumnName("Total_Exceeded_Minutes")
+                .HasColumnType("FLOAT")
+                .HasComment("Tempo Total excedido em minutos na vaga");
+
             builder.Property(parked => parked.Active)
                 .IsRequired()
                 .HasColumnName("Active")
                 .HasColumnType("BIT")
                 .HasComment("Indica se a parada do veículo está em ativa");
+
 
             #endregion
 
