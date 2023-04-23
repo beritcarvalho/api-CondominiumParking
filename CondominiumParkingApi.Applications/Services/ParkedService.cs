@@ -58,15 +58,8 @@ namespace CondominiumParkingApi.Applications.Services
             {
                 await _parkedRepository.InsertAsync(parked);
 
-                return new ParkedViewModel
-                {
-                    Id = parked.Id,
-                    ParkingSpaceId = parked.ParkingSpaceId,
-                    ApartmentVehicleId = parked.ApartmentVehicleId,
-                    In_Date = parked.In_Date,
-                    Out_Date = parked.Out_Date,
-                    Active = parked.Active
-                };
+                return _mapper.Map<ParkedViewModel>(parked);
+
             }catch (Exception ex)
             {
                 throw ex;
@@ -86,17 +79,7 @@ namespace CondominiumParkingApi.Applications.Services
 
                 await _parkedRepository.UpdateAsync(parked);
 
-                return new ParkedViewModel
-                {
-                    Id = parked.Id,
-                    ParkingSpaceId = parked.ParkingSpaceId,
-                    ApartmentVehicleId = parked.ApartmentVehicleId,
-                    In_Date = parked.In_Date,
-                    Out_Date = parked.Out_Date,
-                    Active = parked.Active,
-                    //Exceeded = parked.Total_Exceeded_Minutes.HasValue,
-                    //Time_Exceeded = parked.Total_Exceeded_Minutes.HasValue ? TimeSpan.FromMinutes((double)parked.Total_Exceeded_Minutes) : null
-                };
+                return _mapper.Map<ParkedViewModel>(parked);
             }
             catch (Exception ex)
             {
