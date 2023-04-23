@@ -26,6 +26,28 @@ namespace CondominiumParkingApi.Applications.Services
             var activeParked = await _parkedRepository.GetAllAsync();
 
             var listReturn = new List<ParkedViewModel>();
+
+            foreach (var item in activeParked)
+            {
+                listReturn.Add(new ParkedViewModel
+                {
+                    Id = item.Id,
+                    ParkingSpaceId = item.ParkingSpaceId,
+                    ApartmentVehicleId = item.ApartmentVehicleId,
+                    In_Date = item.In_Date,
+                    Out_Date = item.Out_Date,
+                    Active = item.Active
+                });
+            }
+
+            return listReturn;
+        }
+
+        public async Task<List<ParkedViewModel>> GetAllParkedActive()
+        {
+            var activeParked = await _parkedRepository.GetAllParkedActive();
+
+            var listReturn = new List<ParkedViewModel>();
             
             foreach (var item in activeParked)
             {
@@ -98,7 +120,7 @@ namespace CondominiumParkingApi.Applications.Services
                     Out_Date = parked.Out_Date,
                     Active = parked.Active,
                     Exceeded = parked.Total_Exceeded_Minutes.HasValue,
-                    Time_Exceeded = TimeSpan.FromMinutes((double)parked.Total_Exceeded_Minutes)
+                    Time_Exceeded = parked.Total_Exceeded_Minutes.HasValue ? TimeSpan.FromMinutes((double)parked.Total_Exceeded_Minutes) : null
                 };
             }
             catch (Exception ex)

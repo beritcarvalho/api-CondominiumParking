@@ -38,7 +38,7 @@ namespace CondominiumParkingApi.Applications.Services
         public async Task<List<ParkingSpaceViewModel>> GetAllParkingSpaces()
         {
             var parkingSpaces = await _parkingSpaceRepository.GetAllAsync();
-            var parkedActives = await _parkedRepository.GetParkedActive();
+            var parkedActives = await _parkedRepository.GetAllParkedActive();
 
             var listReturn = new List<ParkingSpaceViewModel>();
 

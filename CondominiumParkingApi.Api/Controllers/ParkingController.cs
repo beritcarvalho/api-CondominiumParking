@@ -33,7 +33,25 @@ namespace CondominiumParkingApi.Api.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpGet("actives")]
+        public async Task<IActionResult> GetAllParkedActive()
+        {
+            try
+            {
+                var parkingSpaces = await _parkedService.GetAllParkedActive();
+
+                if (parkingSpaces.Count is 0)
+                    return NotFound();
+
+                return Ok(parkingSpaces);
+            }
+            catch (Exception exception)
+            {
+                return StatusCode(500, exception.Message);
+            }
+        }
+
+        [HttpPost("in")]
         public async Task<IActionResult> Park([FromBody] ParkedInputModel entering)
         {
             try
@@ -51,7 +69,7 @@ namespace CondominiumParkingApi.Api.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPut("out")]
         public async Task<IActionResult> Unpark([FromBody] ParkedInputModel leaving)
         {
             try

@@ -16,6 +16,6 @@ namespace CondominiumParkingApi.Applications.ViewModels
         public DateTime? Out_Date { get; set; }
         public bool Active { get; set; }
         public bool Exceeded { get; set; }
-        public TimeSpan Time_Exceeded { get; set; }
+        public TimeSpan? Time_Exceeded { get; set; }
     }
 }
