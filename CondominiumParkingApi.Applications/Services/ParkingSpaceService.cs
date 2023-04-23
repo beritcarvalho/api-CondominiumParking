@@ -1,7 +1,9 @@
-﻿using CondominiumParkingApi.Applications.Interfaces;
+﻿using CondominiumParkingApi.Applications.InputModels;
+using CondominiumParkingApi.Applications.Interfaces;
 using CondominiumParkingApi.Applications.ViewModels;
 using CondominiumParkingApi.Domain.Entities;
 using CondominiumParkingApi.Domain.Interfaces;
+using System;
 
 namespace CondominiumParkingApi.Applications.Services
 {
@@ -67,17 +69,12 @@ namespace CondominiumParkingApi.Applications.Services
             return listReturn;
         }
 
-        public async Task<List<ParkingSpaceViewModel>> CreateNewParkingSpaces(int quantity)
+        public async Task<List<ParkingSpaceViewModel>> CreateNewParkingSpaces(ParkingSpaceInputModel range)
         {
-            var spaces = new List<ParkingSpace>();
+            if (range.From < 1 || range.To < range.From)
+                return new List<ParkingSpaceViewModel>();
 
-            for (int i = 1; i <= quantity; i++)
-            {
-                spaces.Add(new ParkingSpace
-                {
-                    Space = i
-                });
-            }
+            List<ParkingSpace> spaces = await PrepararLista(range, true);
 
             await _parkingSpaceRepository.InsertRangeAsync(spaces);
 
@@ -94,6 +91,173 @@ namespace CondominiumParkingApi.Applications.Services
             }
 
             return returns;
-        }        
+        }
+
+        public async Task<List<ParkingSpaceViewModel>> EnableByRange(ParkingSpaceInputModel range)
+        {
+            if (range.From < 1 || range.To < range.From)
+                return new List<ParkingSpaceViewModel>();
+
+            List<ParkingSpace> spaces = await PrepararLista(range);
+            
+            foreach (var item in spaces)
+            {
+                item.Active = true;
+            }
+
+            await _parkingSpaceRepository.UpdateAsync(spaces);
+
+            var returns = new List<ParkingSpaceViewModel>();
+
+            foreach (var item in spaces)
+            {
+                returns.Add(new ParkingSpaceViewModel
+                {
+                    Id = item.Id,
+                    Space = item.Space,
+                    Handicap = item.Handicap
+                });
+            }
+
+            return returns;
+        }
+
+        public async Task<List<ParkingSpaceViewModel>> DisableByRange(ParkingSpaceInputModel range)
+        {
+            if (range.From < 1 || range.To < range.From)
+                return new List<ParkingSpaceViewModel>();
+
+            List<ParkingSpace> spaces = await PrepararLista(range);
+
+            foreach (var item in spaces)
+            {
+                item.Active = false;
+            }
+            await _parkingSpaceRepository.UpdateAsync(spaces);
+
+            var returns = new List<ParkingSpaceViewModel>();
+
+            foreach (var item in spaces)
+            {
+                returns.Add(new ParkingSpaceViewModel
+                {
+                    Id = item.Id,
+                    Space = item.Space,
+                    Handicap = item.Handicap
+                });
+            }
+
+            return returns;
+        }
+
+        public async Task<List<ParkingSpaceViewModel>> DisableHandcapByRange(ParkingSpaceInputModel range)
+        {
+            if (range.From < 1 || range.To < range.From)
+                return new List<ParkingSpaceViewModel>();
+
+            List<ParkingSpace> spaces = await PrepararLista(range);
+
+            foreach (var item in spaces)
+            {
+                item.Handicap = false;
+            }
+            await _parkingSpaceRepository.UpdateAsync(spaces);
+
+            var returns = new List<ParkingSpaceViewModel>();
+
+            foreach (var item in spaces)
+            {
+                returns.Add(new ParkingSpaceViewModel
+                {
+                    Id = item.Id,
+                    Space = item.Space,
+                    Handicap = item.Handicap
+                });
+            }
+
+            return returns;
+        }
+
+        public async Task<List<ParkingSpaceViewModel>> EnableHandcapByRange(ParkingSpaceInputModel range)
+        {
+            if (range.From < 1 || range.To < range.From)
+                return new List<ParkingSpaceViewModel>();
+
+            List<ParkingSpace> spaces = await PrepararLista(range);
+
+            foreach (var item in spaces)
+            {
+                item.Handicap = true;
+            }
+            await _parkingSpaceRepository.UpdateAsync(spaces);
+
+            var returns = new List<ParkingSpaceViewModel>();
+
+            foreach (var item in spaces)
+            {
+                returns.Add(new ParkingSpaceViewModel
+                {
+                    Id = item.Id,
+                    Space = item.Space,
+                    Handicap = item.Handicap
+                });
+            }
+
+            return returns;
+        }
+
+        private async Task<List<ParkingSpace>> PrepararLista(ParkingSpaceInputModel range, bool creation = false)
+        {
+            var spaces = new List<ParkingSpace>();
+            spaces = await _parkingSpaceRepository.GetAllAsync();
+
+            var ids = spaces.Select(x => x.Space).ToArray();
+            int menor;
+            int maior;
+            if (ids.Length > 0)
+            {
+                menor = ids.Min();
+                maior = ids.Max();
+            }
+            else
+            {
+                menor = range.From;
+                maior = range.To;
+            }
+
+
+            for (int i = range.From - 1; i >= menor; i--)
+            {
+                var space = spaces.FirstOrDefault(x => x.Space == i);
+
+                if (space is not null)
+                    spaces.Remove(space);
+            }
+
+            for (int i = range.To + 1; i <= maior; i++)
+            {
+                var space = spaces.FirstOrDefault(x => x.Space == i);
+
+                if (space is not null)
+                    spaces.Remove(space);
+            }
+
+            if (creation)
+            {
+                for (int i = range.From; i <= range.To; i++)
+                {
+                    var space = spaces.FirstOrDefault(x => x.Space == i);
+                    if (space is not null)
+                        spaces.Remove(space);
+                    else
+                        spaces.Add(new ParkingSpace
+                        {
+                            Space = i
+                        });
+                }
+            }
+
+            return spaces;
+        }
     }
 }

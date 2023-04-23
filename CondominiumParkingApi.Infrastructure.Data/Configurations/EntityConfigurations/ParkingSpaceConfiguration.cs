@@ -42,6 +42,13 @@ namespace CondominiumParkingApi.Infrastructure.Data.Configurations.EntityConfigu
                 .HasDefaultValueSql("0")
                 .HasComment("Indica se a vaga é reservada para pessoas de necessidades especiais");
 
+            builder.Property(parked => parked.Active)
+                .IsRequired()
+                .HasColumnName("Active")
+                .HasColumnType("BIT")
+                .HasDefaultValueSql("1")
+                .HasComment("Indica se a vaga está ativa para uso");
+
             #endregion
 
             #region Indexes         
