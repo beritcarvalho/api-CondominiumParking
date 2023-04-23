@@ -6,5 +6,6 @@ namespace CondominiumParkingApi.Applications.Interfaces
     {
         Task<List<ParkingSpaceViewModel>> GetAll();
         Task<List<ParkingSpaceViewModel>> CreateNewParkingSpaces(int quantity);
+        Task<List<ParkingSpaceViewModel>> GetAllParkingSpaces();
     }
 }

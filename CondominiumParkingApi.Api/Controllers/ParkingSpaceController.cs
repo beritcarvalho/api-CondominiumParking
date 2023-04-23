@@ -15,11 +15,11 @@ namespace CondominiumParkingApi.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAllParkingSpaces()
         {
             try
             {
-                var parkingSpaces = await _parkingSpaceService.GetAll();
+                var parkingSpaces = await _parkingSpaceService.GetAllParkingSpaces();
 
                 if (parkingSpaces.Count is 0)
                     return NotFound();
