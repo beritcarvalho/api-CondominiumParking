@@ -33,7 +33,7 @@ namespace CondominiumParkingApi.Applications.Services
             else
                 activeParkeds = await _parkedRepository.GetAllAsync();
 
-            var results = new List<ParkedViewModel>();
+            var results = new List<ParkedViewModel>();  
 
             results.AddRange(activeParkeds.Select(parked => _mapper.Map<ParkedViewModel>(parked)));
 
