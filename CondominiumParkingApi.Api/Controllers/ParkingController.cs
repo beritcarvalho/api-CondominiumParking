@@ -20,7 +20,7 @@ namespace CondominiumParkingApi.Api.Controllers
         {
             try
             {
-                var parkingSpaces = await _parkedService.GetAll();
+                var parkingSpaces = await _parkedService.GetAll(false);
 
                 if (parkingSpaces.Count is 0)
                     return NotFound();
@@ -38,7 +38,7 @@ namespace CondominiumParkingApi.Api.Controllers
         {
             try
             {
-                var parkingSpaces = await _parkedService.GetAllParkedActive();
+                var parkingSpaces = await _parkedService.GetAll(true);
 
                 if (parkingSpaces.Count is 0)
                     return NotFound();

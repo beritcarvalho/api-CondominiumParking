@@ -24,37 +24,20 @@ namespace CondominiumParkingApi.Applications.Services
             _mapper = mapper;
         }
 
-        public async Task<List<ParkedViewModel>> GetAll()
+        public async Task<List<ParkedViewModel>> GetAll(bool active)
         {
-            var activeParked = await _parkedRepository.GetAllAsync();
+            List<Parked> activeParkeds = new();
+
+            if (active)
+                activeParkeds = await _parkedRepository.GetAllParkedActive();
+            else
+                activeParkeds = await _parkedRepository.GetAllAsync();
 
             var results = new List<ParkedViewModel>();
 
-            results.AddRange(activeParked.Select(parked => _mapper.Map<ParkedViewModel>(parked)));
+            results.AddRange(activeParkeds.Select(parked => _mapper.Map<ParkedViewModel>(parked)));
 
             return results;
-        }
-
-        public async Task<List<ParkedViewModel>> GetAllParkedActive()
-        {
-            var activeParked = await _parkedRepository.GetAllParkedActive();
-
-            var listReturn = new List<ParkedViewModel>();
-            
-            foreach (var item in activeParked)
-            {
-                listReturn.Add(new ParkedViewModel
-                {
-                    Id = item.Id,
-                    ParkingSpaceId = item.ParkingSpaceId,
-                    ApartmentVehicleId = item.ApartmentVehicleId,
-                    In_Date = item.In_Date,
-                    Out_Date = item.Out_Date,
-                    Active = item.Active
-                });
-            }
-
-            return listReturn;
         }
 
         public async Task<ParkedViewModel> Park(ParkedInputModel entering)
