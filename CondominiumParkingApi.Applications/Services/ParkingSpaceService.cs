@@ -74,7 +74,7 @@ namespace CondominiumParkingApi.Applications.Services
             if (range.From < 1 || range.To < range.From)
                 return new List<ParkingSpaceViewModel>();
 
-            List<ParkingSpace> spaces = await PrepararLista(range, true);
+            List<ParkingSpace> spaces = await PrepareList(range, true);
 
             await _parkingSpaceRepository.InsertRangeAsync(spaces);
 
@@ -98,28 +98,23 @@ namespace CondominiumParkingApi.Applications.Services
             if (range.From < 1 || range.To < range.From)
                 return new List<ParkingSpaceViewModel>();
 
-            List<ParkingSpace> spaces = await PrepararLista(range);
-            
-            foreach (var item in spaces)
-            {
-                item.Active = true;
-            }
+            List<ParkingSpace> spaces = await PrepareList(range);
+
+            spaces.ForEach(space => space.EnableParkingSpace());
 
             await _parkingSpaceRepository.UpdateAsync(spaces);
 
-            var returns = new List<ParkingSpaceViewModel>();
+            var parkingSpaces = new List<ParkingSpaceViewModel>();
 
-            foreach (var item in spaces)
-            {
-                returns.Add(new ParkingSpaceViewModel
+            parkingSpaces.AddRange(spaces.Select(space =>
+                new ParkingSpaceViewModel
                 {
-                    Id = item.Id,
-                    Space = item.Space,
-                    Handicap = item.Handicap
-                });
-            }
+                    Id = space.Id,
+                    Space = space.Space,
+                    Handicap = space.Handicap
+                }));
 
-            return returns;
+            return parkingSpaces;
         }
 
         public async Task<List<ParkingSpaceViewModel>> DisableByRange(ParkingSpaceInputModel range)
@@ -127,11 +122,11 @@ namespace CondominiumParkingApi.Applications.Services
             if (range.From < 1 || range.To < range.From)
                 return new List<ParkingSpaceViewModel>();
 
-            List<ParkingSpace> spaces = await PrepararLista(range);
+            List<ParkingSpace> spaces = await PrepareList(range);
 
             foreach (var item in spaces)
             {
-                item.Active = false;
+                item.DisableParkingSpace();
             }
             await _parkingSpaceRepository.UpdateAsync(spaces);
 
@@ -155,11 +150,11 @@ namespace CondominiumParkingApi.Applications.Services
             if (range.From < 1 || range.To < range.From)
                 return new List<ParkingSpaceViewModel>();
 
-            List<ParkingSpace> spaces = await PrepararLista(range);
+            List<ParkingSpace> spaces = await PrepareList(range);
 
             foreach (var item in spaces)
             {
-                item.Handicap = false;
+                item.DisableHandicap();
             }
             await _parkingSpaceRepository.UpdateAsync(spaces);
 
@@ -183,11 +178,11 @@ namespace CondominiumParkingApi.Applications.Services
             if (range.From < 1 || range.To < range.From)
                 return new List<ParkingSpaceViewModel>();
 
-            List<ParkingSpace> spaces = await PrepararLista(range);
+            List<ParkingSpace> spaces = await PrepareList(range);
 
             foreach (var item in spaces)
             {
-                item.Handicap = true;
+                item.EnableHandicap();
             }
             await _parkingSpaceRepository.UpdateAsync(spaces);
 
@@ -206,27 +201,27 @@ namespace CondominiumParkingApi.Applications.Services
             return returns;
         }
 
-        private async Task<List<ParkingSpace>> PrepararLista(ParkingSpaceInputModel range, bool creation = false)
+        private async Task<List<ParkingSpace>> PrepareList(ParkingSpaceInputModel range, bool creation = false)
         {
             var spaces = new List<ParkingSpace>();
             spaces = await _parkingSpaceRepository.GetAllAsync();
 
-            var ids = spaces.Select(x => x.Space).ToArray();
-            int menor;
-            int maior;
-            if (ids.Length > 0)
+            var numbers = spaces.Select(x => x.Space).ToArray();
+            int min;
+            int max;
+            if (numbers.Length > 0)
             {
-                menor = ids.Min();
-                maior = ids.Max();
+                min = numbers.Min();
+                max = numbers.Max();
             }
             else
             {
-                menor = range.From;
-                maior = range.To;
+                min = range.From;
+                max = range.To;
             }
 
-
-            for (int i = range.From - 1; i >= menor; i--)
+            //removes all parking spaces less than "from"
+            for (int i = range.From - 1; i >= min; i--)
             {
                 var space = spaces.FirstOrDefault(x => x.Space == i);
 
@@ -234,7 +229,8 @@ namespace CondominiumParkingApi.Applications.Services
                     spaces.Remove(space);
             }
 
-            for (int i = range.To + 1; i <= maior; i++)
+            //removes all parking spaces greater than "to"
+            for (int i = range.To + 1; i <= max; i++)
             {
                 var space = spaces.FirstOrDefault(x => x.Space == i);
 
@@ -242,6 +238,7 @@ namespace CondominiumParkingApi.Applications.Services
                     spaces.Remove(space);
             }
 
+            //removes all existing parking spaces or adds new spaces between "from" to "to"
             if (creation)
             {
                 for (int i = range.From; i <= range.To; i++)
@@ -257,7 +254,7 @@ namespace CondominiumParkingApi.Applications.Services
                 }
             }
 
-            return spaces;
+            return spaces.OrderBy(x => x.Space).ToList();
         }
     }
 }
