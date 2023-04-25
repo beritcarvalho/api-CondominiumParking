@@ -1,6 +1,7 @@
 using CondominiumParkingApi.Applications.InputModels;
 using CondominiumParkingApi.Applications.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace CondominiumParkingApi.Api.Controllers
 {
@@ -34,10 +35,13 @@ namespace CondominiumParkingApi.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateInQuantities([FromBody] ParkingSpaceInputModel range)
+        public async Task<IActionResult> CreateInQuantities([FromBody] RangeInputModel range)
         {
             try
             {
+                if (range.From < 1 || range.To < range.From)
+                    return NotFound();
+
                 var parkingSpaces = await _parkingSpaceService.CreateNewParkingSpaces(range);
 
                 if (parkingSpaces.Count is 0)
@@ -51,12 +55,15 @@ namespace CondominiumParkingApi.Api.Controllers
             }
         }
 
-        [HttpPut("enable")]
-        public async Task<IActionResult> EnableParkingSpacesByRange([FromBody] ParkingSpaceInputModel range)
+        [HttpPut("availability/change")]
+        public async Task<IActionResult> ChangeParkingSpaceAvailability([FromBody] ChangeParkingSpaceAvailability input)
         {
             try
             {
-                var parkingSpaces = await _parkingSpaceService.EnableByRange(range);
+                if (input.From < 1 || input.To < input.From)
+                    return NotFound();
+
+                var parkingSpaces = await _parkingSpaceService.ChangeParkingSpaceAvailability(input);
 
                 if (parkingSpaces.Count is 0)
                     return NotFound();
@@ -69,48 +76,15 @@ namespace CondominiumParkingApi.Api.Controllers
             }
         }
 
-        [HttpPut("disable")]
-        public async Task<IActionResult> DisableParkingSpacesByRange([FromBody] ParkingSpaceInputModel range)
+        [HttpPut("handicap/change")]
+        public async Task<IActionResult> ChangeReservationOfHandicapped([FromBody] HandicapParkingSpaceInputModel input)
         {
             try
             {
-                var parkingSpaces = await _parkingSpaceService.DisableByRange(range);
-
-                if (parkingSpaces.Count is 0)
+                if (input.From < 1 || input.To < input.From)
                     return NotFound();
 
-                return Ok(parkingSpaces);
-            }
-            catch (Exception exception)
-            {
-                return StatusCode(500, exception.Message);
-            }
-        }
-
-        [HttpPut("handcap/disable")]
-        public async Task<IActionResult> DisableHandcapByRange([FromBody] ParkingSpaceInputModel range)
-        {
-            try
-            {
-                var parkingSpaces = await _parkingSpaceService.DisableHandcapByRange(range);
-
-                if (parkingSpaces.Count is 0)
-                    return NotFound();
-
-                return Ok(parkingSpaces);
-            }
-            catch (Exception exception)
-            {
-                return StatusCode(500, exception.Message);
-            }
-        }
-
-        [HttpPut("handcap/enable")]
-        public async Task<IActionResult> EnableHandcapByRange([FromBody] ParkingSpaceInputModel range)
-        {
-            try
-            {
-                var parkingSpaces = await _parkingSpaceService.EnableHandcapByRange(range);
+                var parkingSpaces = await _parkingSpaceService.ChangeReservationOfHandicapped(input);
 
                 if (parkingSpaces.Count is 0)
                     return NotFound();

@@ -5,12 +5,9 @@ namespace CondominiumParkingApi.Applications.Interfaces
 {
     public interface IParkingSpaceService
     {
-        Task<List<ParkingSpaceViewModel>> GetAll();
-        Task<List<ParkingSpaceViewModel>> CreateNewParkingSpaces(ParkingSpaceInputModel range);
-        Task<List<ParkingSpaceViewModel>> EnableByRange(ParkingSpaceInputModel range);
-        Task<List<ParkingSpaceViewModel>> DisableByRange(ParkingSpaceInputModel range);            
+        Task<List<ParkingSpaceViewModel>> CreateNewParkingSpaces(RangeInputModel range);
+        Task<List<ParkingSpaceViewModel>> ChangeParkingSpaceAvailability(ChangeParkingSpaceAvailability input);
         Task<List<ParkingSpaceViewModel>> GetAllParkingSpaces();
-        Task<List<ParkingSpaceViewModel>> EnableHandcapByRange(ParkingSpaceInputModel range);
-        Task<List<ParkingSpaceViewModel>> DisableHandcapByRange(ParkingSpaceInputModel range);
+        Task<List<ParkingSpaceViewModel>> ChangeReservationOfHandicapped(HandicapParkingSpaceInputModel input);
     }
 }
