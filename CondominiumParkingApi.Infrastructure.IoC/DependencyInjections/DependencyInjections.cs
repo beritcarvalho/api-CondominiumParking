@@ -28,9 +28,7 @@ namespace CondominiumParkingApi.Infrastructure.IoC.DependencyInjections
         }
 
         private static void AddServices(IServiceCollection services)
-        {
-            services.AddAutoMapper(typeof(CondominiumParkingApi.Applications.Mappings.MappingAssemblyMarker));
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());            
+        {       
             services.AddScoped<IParkedService, ParkedService>();
             services.AddScoped<IParkingSpaceService, ParkingSpaceService>();
         }
@@ -45,7 +43,6 @@ namespace CondominiumParkingApi.Infrastructure.IoC.DependencyInjections
         private static void AddConfigurations(IServiceCollection services)
         {
             services.AddAutoMapper(typeof(CondominiumParkingApi.Applications.Mappings.MappingAssemblyMarker));
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
     }
 }
