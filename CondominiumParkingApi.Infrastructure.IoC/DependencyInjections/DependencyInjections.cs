@@ -1,6 +1,5 @@
 ﻿using CondominiumParkingApi.Applications.Interfaces;
 using CondominiumParkingApi.Applications.Services;
-using CondominiumParkingApi.Domain.Entities;
 using CondominiumParkingApi.Domain.Interfaces;
 using CondominiumParkingApi.Infrastructure.Data.Contexts;
 using CondominiumParkingApi.Infrastructure.Data.Repositories;
@@ -21,6 +20,7 @@ namespace CondominiumParkingApi.Infrastructure.IoC.DependencyInjections
 
             #endregion
 
+            AddConfigurations(services);
             AddServices(services);
             AddRepository(services);
 
@@ -28,7 +28,7 @@ namespace CondominiumParkingApi.Infrastructure.IoC.DependencyInjections
         }
 
         private static void AddServices(IServiceCollection services)
-        {
+        {       
             services.AddScoped<IParkedService, ParkedService>();
             services.AddScoped<IParkingSpaceService, ParkingSpaceService>();
         }
@@ -38,6 +38,11 @@ namespace CondominiumParkingApi.Infrastructure.IoC.DependencyInjections
             services.AddScoped<IParkedRepository, ParkedRepository>();
             services.AddScoped<IParkingSpaceRepository, ParkingSpaceRepository>();
             services.AddScoped<IApartmentVehicleRepository, ApartmentVehicleRepository>();
+        }
+
+        private static void AddConfigurations(IServiceCollection services)
+        {
+            services.AddAutoMapper(typeof(CondominiumParkingApi.Applications.Mappings.MappingAssemblyMarker));
         }
     }
 }

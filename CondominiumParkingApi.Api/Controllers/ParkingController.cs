@@ -20,7 +20,7 @@ namespace CondominiumParkingApi.Api.Controllers
         {
             try
             {
-                var parkingSpaces = await _parkedService.GetAll();
+                var parkingSpaces = await _parkedService.GetAll(false);
 
                 if (parkingSpaces.Count is 0)
                     return NotFound();
@@ -38,7 +38,7 @@ namespace CondominiumParkingApi.Api.Controllers
         {
             try
             {
-                var parkingSpaces = await _parkedService.GetAllParkedActive();
+                var parkingSpaces = await _parkedService.GetAll(true);
 
                 if (parkingSpaces.Count is 0)
                     return NotFound();
@@ -69,12 +69,12 @@ namespace CondominiumParkingApi.Api.Controllers
             }
         }
 
-        [HttpPut("out")]
-        public async Task<IActionResult> Unpark([FromBody] ParkedInputModel leaving)
+        [HttpPut("out/{parkedId}")]
+        public async Task<IActionResult> Unpark([FromRoute] decimal parkedId)
         {
             try
             {
-                var parked = await _parkedService.Unpark(leaving);
+                var parked = await _parkedService.Unpark(parkedId);
 
                 if (parked is null)
                     return NotFound();
