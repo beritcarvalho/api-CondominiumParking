@@ -1,5 +1,6 @@
 using CondominiumParkingApi.Applications.InputModels;
 using CondominiumParkingApi.Applications.Interfaces;
+using CondominiumParkingApi.Domain.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CondominiumParkingApi.Api.Controllers
@@ -27,6 +28,10 @@ namespace CondominiumParkingApi.Api.Controllers
 
                 return Ok(parkingSpaces);
             }
+            catch (NotFoundException exception)
+            {
+                return NotFound(exception.Message);
+            }
             catch (Exception exception)
             {
                 return StatusCode(500, exception.Message);
@@ -45,6 +50,10 @@ namespace CondominiumParkingApi.Api.Controllers
 
                 return Ok(parkingSpaces);
             }
+            catch (NotFoundException exception)
+            {
+                return NotFound(exception.Message);
+            }
             catch (Exception exception)
             {
                 return StatusCode(500, exception.Message);
@@ -58,10 +67,15 @@ namespace CondominiumParkingApi.Api.Controllers
             {
                 var parked = await _parkedService.Park(entering);
 
-                if (parked is null)
-                    return NotFound();
-
                 return Ok(parked);
+            }
+            catch (NotFoundException exception)
+            {
+                return NotFound(exception.Message);
+            }
+            catch (BadRequestException exception)
+            {
+                return BadRequest(exception.Message);
             }
             catch (Exception exception)
             {
@@ -76,10 +90,15 @@ namespace CondominiumParkingApi.Api.Controllers
             {
                 var parked = await _parkedService.Unpark(parkedId);
 
-                if (parked is null)
-                    return NotFound();
-
                 return Ok(parked);
+            }
+            catch (NotFoundException exception)
+            {
+                return NotFound(exception.Message);
+            }
+            catch (BadRequestException exception)
+            {
+                return BadRequest(exception.Message);
             }
             catch (Exception exception)
             {

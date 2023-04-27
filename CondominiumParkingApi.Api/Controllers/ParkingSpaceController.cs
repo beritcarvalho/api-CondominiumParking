@@ -1,5 +1,6 @@
 using CondominiumParkingApi.Applications.InputModels;
 using CondominiumParkingApi.Applications.Interfaces;
+using CondominiumParkingApi.Domain.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -27,6 +28,10 @@ namespace CondominiumParkingApi.Api.Controllers
                     return NotFound();
 
                 return Ok(parkingSpaces);
+            }
+            catch (NotFoundException exception)
+            {
+                return NotFound(exception.Message);
             }
             catch (Exception exception)
             {
