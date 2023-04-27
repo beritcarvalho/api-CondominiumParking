@@ -7,6 +7,6 @@ namespace CondominiumParkingApi.Applications.Interfaces
     {        
         Task<List<ParkedViewModel>> GetAll(bool active);
         Task<ParkedViewModel> Park(ParkedInputModel entering);
-        Task<ParkedViewModel> Unpark(ParkedInputModel leaving);
+        Task<ParkedViewModel> Unpark(decimal parkedId);
     }
 }

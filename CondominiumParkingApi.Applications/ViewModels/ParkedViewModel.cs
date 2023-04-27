@@ -43,7 +43,7 @@ namespace CondominiumParkingApi.Applications.ViewModels
         private void TimeExceeded(double? minutes)
         {
             Exceeded = minutes.HasValue;
-            TimeSpan time = TimeSpan.FromHours(minutes.HasValue ? (double)minutes : 0);
+            TimeSpan time = TimeSpan.FromMinutes(minutes.HasValue ? (double)minutes : 0);
             string formattedTime = time.ToString(@"dd\.hh\:mm\:ss");
             Time_Exceeded = TimeSpan.Parse(formattedTime);
         }

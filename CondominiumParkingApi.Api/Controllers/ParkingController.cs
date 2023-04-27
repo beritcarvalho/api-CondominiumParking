@@ -69,12 +69,12 @@ namespace CondominiumParkingApi.Api.Controllers
             }
         }
 
-        [HttpPut("out")]
-        public async Task<IActionResult> Unpark([FromBody] ParkedInputModel leaving)
+        [HttpPut("out/{parkedId}")]
+        public async Task<IActionResult> Unpark([FromRoute] decimal parkedId)
         {
             try
             {
-                var parked = await _parkedService.Unpark(leaving);
+                var parked = await _parkedService.Unpark(parkedId);
 
                 if (parked is null)
                     return NotFound();

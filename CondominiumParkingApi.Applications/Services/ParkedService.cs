@@ -66,11 +66,11 @@ namespace CondominiumParkingApi.Applications.Services
             }
         }
 
-        public async Task<ParkedViewModel> Unpark(ParkedInputModel leaving)
+        public async Task<ParkedViewModel> Unpark(decimal parkedId)
         {
             try
             {
-                var parked = await _parkedRepository.GetByIdAsync(leaving.ParkedId);
+                var parked = await _parkedRepository.GetByIdAsync(parkedId);
 
                 if (parked is null)
                     return null;
