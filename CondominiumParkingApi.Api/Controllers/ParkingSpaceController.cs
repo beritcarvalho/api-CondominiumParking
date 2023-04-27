@@ -1,5 +1,6 @@
 using CondominiumParkingApi.Applications.InputModels;
 using CondominiumParkingApi.Applications.Interfaces;
+using CondominiumParkingApi.Applications.ViewModels;
 using CondominiumParkingApi.Domain.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -25,17 +26,17 @@ namespace CondominiumParkingApi.Api.Controllers
                 var parkingSpaces = await _parkingSpaceService.GetAllParkingSpaces();
 
                 if (parkingSpaces.Count is 0)
-                    return NotFound();
+                    return NotFound(new ResultViewModel<List<ParkingSpaceViewModel>>("ERR-PC001 Nenhum Registro encontrado!"));
 
-                return Ok(parkingSpaces);
+                return Ok(new ResultViewModel<List<ParkingSpaceViewModel>>(parkingSpaces));
             }
             catch (NotFoundException exception)
             {
-                return NotFound(exception.Message);
+                return NotFound(new ResultViewModel<List<ParkingSpaceViewModel>>(exception.Message));
             }
             catch (Exception exception)
             {
-                return StatusCode(500, exception.Message);
+                return StatusCode(500, new ResultViewModel<List<ParkingSpaceViewModel>>(exception.Message));
             }
         }
 
@@ -45,18 +46,18 @@ namespace CondominiumParkingApi.Api.Controllers
             try
             {
                 if (range.From < 1 || range.To < range.From)
-                    return NotFound();
+                    return BadRequest(new ResultViewModel<List<ParkingSpaceViewModel>>("ERR-PC002 O range informado está inválido!"));
 
                 var parkingSpaces = await _parkingSpaceService.CreateNewParkingSpaces(range);
 
                 if (parkingSpaces.Count is 0)
-                    return NotFound();
+                    return NotFound(new ResultViewModel<List<ParkingSpaceViewModel>>("ERR-PC003 Nenhum Registro encontrado!"));
 
-                return Ok(parkingSpaces);
+                return Ok(new ResultViewModel<List<ParkingSpaceViewModel>>(parkingSpaces));
             }
             catch (Exception exception)
             {
-                return StatusCode(500, exception.Message);
+                return StatusCode(500, new ResultViewModel<List<ParkingSpaceViewModel>>(exception.Message));
             }
         }
 
@@ -66,18 +67,18 @@ namespace CondominiumParkingApi.Api.Controllers
             try
             {
                 if (input.From < 1 || input.To < input.From)
-                    return NotFound();
+                    return BadRequest(new ResultViewModel<List<ParkingSpaceViewModel>>("ERR-PC004 O range informado está inválido!"));
 
                 var parkingSpaces = await _parkingSpaceService.ChangeParkingSpaceAvailability(input);
 
                 if (parkingSpaces.Count is 0)
-                    return NotFound();
+                    return NotFound(new ResultViewModel<List<ParkingSpaceViewModel>>("ERR-PC005 Nenhum Registro encontrado!"));
 
-                return Ok(parkingSpaces);
+                return Ok(new ResultViewModel<List<ParkingSpaceViewModel>>(parkingSpaces));
             }
             catch (Exception exception)
             {
-                return StatusCode(500, exception.Message);
+                return StatusCode(500, new ResultViewModel<List<ParkingSpaceViewModel>>(exception.Message));
             }
         }
 
@@ -87,18 +88,18 @@ namespace CondominiumParkingApi.Api.Controllers
             try
             {
                 if (input.From < 1 || input.To < input.From)
-                    return NotFound();
+                    return BadRequest(new ResultViewModel<List<ParkingSpaceViewModel>>("ERR-PC006 O range informado está inválido!"));
 
                 var parkingSpaces = await _parkingSpaceService.ChangeReservationOfHandicapped(input);
 
                 if (parkingSpaces.Count is 0)
-                    return NotFound();
+                    return NotFound(new ResultViewModel<List<ParkingSpaceViewModel>>("ERR-PC007 Nenhum Registro encontrado!"));
 
                 return Ok(parkingSpaces);
             }
             catch (Exception exception)
             {
-                return StatusCode(500, exception.Message);
+                return StatusCode(500, new ResultViewModel<List<ParkingSpaceViewModel>>(exception.Message));
             }
         }
     }
