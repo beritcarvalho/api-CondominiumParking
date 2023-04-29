@@ -1,3 +1,4 @@
+using CondominiumParkingApi.Api.Extensions;
 using CondominiumParkingApi.Applications.InputModels;
 using CondominiumParkingApi.Applications.Interfaces;
 using CondominiumParkingApi.Applications.ViewModels;
@@ -45,8 +46,8 @@ namespace CondominiumParkingApi.Api.Controllers
         {
             try
             {
-                if (range.From < 1 || range.To < range.From)
-                    return BadRequest(new ResultViewModel<List<ParkingSpaceViewModel>>("ERR-PC002 O range informado está inválido!"));
+                if (!ModelState.IsValid)
+                    return BadRequest(new ResultViewModel<ParkingSpaceViewModel>(ModelState.GetErrors()));                
 
                 var parkingSpaces = await _parkingSpaceService.CreateNewParkingSpaces(range);
 
@@ -66,8 +67,8 @@ namespace CondominiumParkingApi.Api.Controllers
         {
             try
             {
-                if (input.From < 1 || input.To < input.From)
-                    return BadRequest(new ResultViewModel<List<ParkingSpaceViewModel>>("ERR-PC004 O range informado está inválido!"));
+                if (!ModelState.IsValid)
+                    return BadRequest(new ResultViewModel<ParkingSpaceViewModel>(ModelState.GetErrors()));
 
                 var parkingSpaces = await _parkingSpaceService.ChangeParkingSpaceAvailability(input);
 
@@ -87,8 +88,8 @@ namespace CondominiumParkingApi.Api.Controllers
         {
             try
             {
-                if (input.From < 1 || input.To < input.From)
-                    return BadRequest(new ResultViewModel<List<ParkingSpaceViewModel>>("ERR-PC006 O range informado está inválido!"));
+                if (!ModelState.IsValid)
+                    return BadRequest(new ResultViewModel<ParkingSpaceViewModel>(ModelState.GetErrors()));               
 
                 var parkingSpaces = await _parkingSpaceService.ChangeReservationOfHandicapped(input);
 
