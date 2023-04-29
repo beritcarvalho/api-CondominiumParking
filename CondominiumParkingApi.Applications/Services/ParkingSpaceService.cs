@@ -3,6 +3,7 @@ using CondominiumParkingApi.Applications.InputModels;
 using CondominiumParkingApi.Applications.Interfaces;
 using CondominiumParkingApi.Applications.ViewModels;
 using CondominiumParkingApi.Domain.Entities;
+using CondominiumParkingApi.Domain.Exceptions;
 using CondominiumParkingApi.Domain.Interfaces;
 using System;
 
@@ -24,73 +25,102 @@ namespace CondominiumParkingApi.Applications.Services
 
         public async Task<List<ParkingSpaceViewModel>> GetAllParkingSpaces()
         {
-            var parkingSpaces = await _parkingSpaceRepository.GetAllAsync();
-            var parkedActives = await _parkedRepository.GetAllParkedActive();
-
-            var results = new List<ParkingSpaceViewModel>();
-
-            foreach (var space in parkingSpaces)
+            try
             {
-                var parked = parkedActives.Where(x => x.ParkingSpaceId == space.Id).FirstOrDefault();
+                List<ParkingSpace> parkingSpaces = await _parkingSpaceRepository.GetAllAsync();
 
-                var result = _mapper.Map<ParkingSpaceViewModel>(space);
+                List<Parked> parkedActives = await _parkedRepository.GetAllParkedActive();
 
-                if (parked is not null)
+                var results = new List<ParkingSpaceViewModel>();
+
+                foreach (var space in parkingSpaces)
                 {
-                    _mapper.Map(parked, result);
+                    var parked = parkedActives.Where(x => x.ParkingSpaceId == space.Id).FirstOrDefault();
+
+                    var result = _mapper.Map<ParkingSpaceViewModel>(space);
+
+                    if (parked is not null)
+                    {
+                        _mapper.Map(parked, result);
+                    }
+
+                    results.Add(result);
                 }
 
-                results.Add(result);
+                return results;
             }
-
-            return results;
+            catch
+            {
+                throw new Exception("ERR-PSS001 Falha interna no servidor");
+            }
         }
 
         public async Task<List<ParkingSpaceViewModel>> CreateNewParkingSpaces(RangeInputModel range)
         {
-            List<ParkingSpace> spaces = await PrepareList(range, true);
+            try
+            {
+                List<ParkingSpace> spaces = await PrepareList(range, true);
 
-            await _parkingSpaceRepository.InsertRangeAsync(spaces);
+                await _parkingSpaceRepository.InsertRangeAsync(spaces);
 
-            var results = new List<ParkingSpaceViewModel>();
+                var results = new List<ParkingSpaceViewModel>();
 
-            results.AddRange(spaces.Select(space => _mapper.Map<ParkingSpaceViewModel>(space)));
+                results.AddRange(spaces.Select(space => _mapper.Map<ParkingSpaceViewModel>(space)));
 
-            return results;
+                return results;
+            }
+            catch
+            {
+                throw new Exception("ERR-PSS002 Falha interna no servidor");
+            }
         }
 
         public async Task<List<ParkingSpaceViewModel>> ChangeParkingSpaceAvailability(ChangeParkingSpaceAvailability input)
         {
-            List<ParkingSpace> spaces = await PrepareList(input);
+            try
+            {
+                List<ParkingSpace> spaces = await PrepareList(input);
 
-            foreach (var space in spaces)
-                if (input.Active) space.EnableParkingSpace();
-                else space.DisableParkingSpace();
+                foreach (var space in spaces)
+                    if (input.Active) space.EnableParkingSpace();
+                    else space.DisableParkingSpace();
 
-            await _parkingSpaceRepository.UpdateAsync(spaces);
+                await _parkingSpaceRepository.UpdateAsync(spaces);
 
-            var results = new List<ParkingSpaceViewModel>();
+                var results = new List<ParkingSpaceViewModel>();
 
-            results.AddRange(spaces.Select(space => _mapper.Map<ParkingSpaceViewModel>(space)));
+                results.AddRange(spaces.Select(space => _mapper.Map<ParkingSpaceViewModel>(space)));
 
-            return results;
+                return results;
+            }
+            catch
+            {
+                throw new Exception("ERR-PSS003 Falha interna no servidor");
+            }
         }
 
         public async Task<List<ParkingSpaceViewModel>> ChangeReservationOfHandicapped(HandicapParkingSpaceInputModel input)
         {
-            List<ParkingSpace> spaces = await PrepareList(input);
+            try
+            {
+                List<ParkingSpace> spaces = await PrepareList(input);
 
-            foreach(var space in spaces)
-                if (input.Handicap) space.EnableHandicap();
-                else space.DisableHandicap();
+                foreach (var space in spaces)
+                    if (input.Handicap) space.EnableHandicap();
+                    else space.DisableHandicap();
 
-            await _parkingSpaceRepository.UpdateAsync(spaces);
+                await _parkingSpaceRepository.UpdateAsync(spaces);
 
-            var results = new List<ParkingSpaceViewModel>();
+                var results = new List<ParkingSpaceViewModel>();
 
-            results.AddRange(spaces.Select(space => _mapper.Map<ParkingSpaceViewModel>(space)));
+                results.AddRange(spaces.Select(space => _mapper.Map<ParkingSpaceViewModel>(space)));
 
-            return results;
+                return results;
+            }
+            catch
+            {
+                throw new Exception("ERR-PSS004 Falha interna no servidor");
+            }
         }
 
         private async Task<List<ParkingSpace>> PrepareList(RangeInputModel range, bool creation = false)

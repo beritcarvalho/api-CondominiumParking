@@ -30,6 +30,16 @@ namespace CondominiumParkingApi.Infrastructure.Data.Repositories
                 .FirstOrDefaultAsync();
         }
 
+        public async Task<ApartmentVehicle> GetActiveLinkByVehicleIdWithInclusions(decimal vehicleId)
+        {
+            return await Context.ApartmentsVehicles
+                .Where(apartVehi => apartVehi.VehicleId == vehicleId && apartVehi.Active)
+                .Include(apartVehi => apartVehi.Apartment.Resident)
+                .Include(apartVehi => apartVehi.Apartment.Block)
+                .Include(apartVehi => apartVehi.Vehicle.VehicleModel.Brand)
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<ApartmentVehicle> GetActiveLinkById(int id)
         {
             var apartmentVehicle = await Context

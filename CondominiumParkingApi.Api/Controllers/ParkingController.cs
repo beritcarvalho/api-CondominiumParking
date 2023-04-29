@@ -1,5 +1,7 @@
 using CondominiumParkingApi.Applications.InputModels;
 using CondominiumParkingApi.Applications.Interfaces;
+using CondominiumParkingApi.Applications.ViewModels;
+using CondominiumParkingApi.Domain.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CondominiumParkingApi.Api.Controllers
@@ -23,13 +25,13 @@ namespace CondominiumParkingApi.Api.Controllers
                 var parkingSpaces = await _parkedService.GetAll(false);
 
                 if (parkingSpaces.Count is 0)
-                    return NotFound();
+                    return NotFound(new ResultViewModel<List<ParkedViewModel>>("ERR-PC001 Nenhum Registro encontrado!"));
 
-                return Ok(parkingSpaces);
+                return Ok(new ResultViewModel<List<ParkedViewModel>>(parkingSpaces));
             }
             catch (Exception exception)
             {
-                return StatusCode(500, exception.Message);
+                return StatusCode(500, new ResultViewModel<List<ParkedViewModel>>(exception.Message));
             }
         }
 
@@ -41,13 +43,13 @@ namespace CondominiumParkingApi.Api.Controllers
                 var parkingSpaces = await _parkedService.GetAll(true);
 
                 if (parkingSpaces.Count is 0)
-                    return NotFound();
+                    return NotFound(new ResultViewModel<List<ParkedViewModel>>("ERR-PC002 Nenhum Registro encontrado!"));
 
-                return Ok(parkingSpaces);
+                return Ok(new ResultViewModel<List<ParkedViewModel>>(parkingSpaces));
             }
             catch (Exception exception)
             {
-                return StatusCode(500, exception.Message);
+                return StatusCode(500, new ResultViewModel<List<ParkedViewModel>>(exception.Message));
             }
         }
 
@@ -58,14 +60,19 @@ namespace CondominiumParkingApi.Api.Controllers
             {
                 var parked = await _parkedService.Park(entering);
 
-                if (parked is null)
-                    return NotFound();
-
-                return Ok(parked);
+                return Ok(new ResultViewModel<ParkedViewModel>(parked));
+            }
+            catch (NotFoundException exception)
+            {
+                return NotFound(new ResultViewModel<ParkedViewModel>(exception.Message));
+            }
+            catch (BadRequestException exception)
+            {
+                return BadRequest(new ResultViewModel<ParkedViewModel>(exception.Message));
             }
             catch (Exception exception)
             {
-                return StatusCode(500, exception.Message);
+                return StatusCode(500, new ResultViewModel<ParkedViewModel>(exception.Message));
             }
         }
 
@@ -76,14 +83,19 @@ namespace CondominiumParkingApi.Api.Controllers
             {
                 var parked = await _parkedService.Unpark(parkedId);
 
-                if (parked is null)
-                    return NotFound();
-
-                return Ok(parked);
+                return Ok(new ResultViewModel<ParkedViewModel>(parked));
+            }
+            catch (NotFoundException exception)
+            {
+                return NotFound(new ResultViewModel<ParkedViewModel>(exception.Message));
+            }
+            catch (BadRequestException exception)
+            {
+                return BadRequest(new ResultViewModel<ParkedViewModel>(exception.Message));
             }
             catch (Exception exception)
             {
-                return StatusCode(500, exception.Message);
+                return StatusCode(500, new ResultViewModel<ParkedViewModel>(exception.Message));
             }
         }
     }

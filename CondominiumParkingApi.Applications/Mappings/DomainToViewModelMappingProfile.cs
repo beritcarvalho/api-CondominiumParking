@@ -23,6 +23,7 @@ namespace CondominiumParkingApi.Applications.Mappings
                 .ForMember(dest => dest.Free, opt => opt.MapFrom(src => true));
 
             CreateMap<Parked, ParkingSpaceViewModel>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Free, opt => opt.MapFrom(src => false))
                 .ForMember(dest => dest.Plate, opt => opt.MapFrom(src => src.ApartmentVehicle.Vehicle.Plate))
                 .ForMember(dest => dest.Apartment, opt => opt.MapFrom(src => string.Format($"{src.ApartmentVehicle.Apartment.Number}-{src.ApartmentVehicle.Apartment.Block.Block_Name}")))

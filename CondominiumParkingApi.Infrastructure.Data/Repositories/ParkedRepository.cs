@@ -13,7 +13,7 @@ namespace CondominiumParkingApi.Infrastructure.Data.Repositories
         }
 
         public async Task<Parked> GetInUseByParkingSpaceId(int parkingSpaceId) =>        
-             await Context.Parkeds.Where(p => p.ParkingSpaceId == parkingSpaceId && p.Active).FirstOrDefaultAsync();
+             await Context.Parkeds.Where(p => p.ParkingSpaceId == parkingSpaceId && p.Active).Include(parked => parked.ParkingSpace).FirstOrDefaultAsync();
 
         public async Task<List<Parked>> GetAllParkedActive()
         {
