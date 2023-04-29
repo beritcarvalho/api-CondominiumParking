@@ -29,9 +29,6 @@ namespace CondominiumParkingApi.Applications.Services
             {
                 List<ParkingSpace> parkingSpaces = await _parkingSpaceRepository.GetAllAsync();
 
-                if (parkingSpaces.Count == 0)
-                    throw new NotFoundException($"ERR-PSS001 Nenhum Registro encontrado!");
-
                 List<Parked> parkedActives = await _parkedRepository.GetAllParkedActive();
 
                 var results = new List<ParkingSpaceViewModel>();
@@ -51,10 +48,6 @@ namespace CondominiumParkingApi.Applications.Services
                 }
 
                 return results;
-            }
-            catch(NotFoundException)
-            {
-                throw;
             }
             catch
             {

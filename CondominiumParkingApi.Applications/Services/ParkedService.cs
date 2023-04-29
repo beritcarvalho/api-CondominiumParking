@@ -36,18 +36,11 @@ namespace CondominiumParkingApi.Applications.Services
                 else
                     parkeds = await _parkedRepository.GetAllAsync();
 
-                if (parkeds.Count == 0)
-                    throw new NotFoundException($"ERR-PS001 Nenhum Registro encontrado!");
-
                 var results = new List<ParkedViewModel>();
 
                 results.AddRange(parkeds.Select(parked => _mapper.Map<ParkedViewModel>(parked)));
 
                 return results;
-            }
-            catch(NotFoundException)
-            {
-                throw;
             }
             catch
             {

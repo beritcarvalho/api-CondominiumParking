@@ -29,10 +29,6 @@ namespace CondominiumParkingApi.Api.Controllers
 
                 return Ok(new ResultViewModel<List<ParkedViewModel>>(parkingSpaces));
             }
-            catch (NotFoundException exception)
-            {
-                return NotFound(new ResultViewModel<List<ParkedViewModel>>(exception.Message));
-            }
             catch (Exception exception)
             {
                 return StatusCode(500, new ResultViewModel<List<ParkedViewModel>>(exception.Message));
@@ -50,10 +46,6 @@ namespace CondominiumParkingApi.Api.Controllers
                     return NotFound(new ResultViewModel<List<ParkedViewModel>>("ERR-PC002 Nenhum Registro encontrado!"));
 
                 return Ok(new ResultViewModel<List<ParkedViewModel>>(parkingSpaces));
-            }
-            catch (NotFoundException exception)
-            {
-                return NotFound(new ResultViewModel<List<ParkedViewModel>>(exception.Message));
             }
             catch (Exception exception)
             {
