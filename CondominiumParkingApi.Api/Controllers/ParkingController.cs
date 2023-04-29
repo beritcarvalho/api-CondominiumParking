@@ -1,3 +1,4 @@
+using CondominiumParkingApi.Api.Extensions;
 using CondominiumParkingApi.Applications.InputModels;
 using CondominiumParkingApi.Applications.Interfaces;
 using CondominiumParkingApi.Applications.ViewModels;
@@ -58,6 +59,9 @@ namespace CondominiumParkingApi.Api.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                    return BadRequest(new ResultViewModel<ParkedViewModel>(ModelState.GetErrors()));
+
                 var parked = await _parkedService.Park(entering);
 
                 return Ok(new ResultViewModel<ParkedViewModel>(parked));
