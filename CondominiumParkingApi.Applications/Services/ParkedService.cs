@@ -14,15 +14,18 @@ namespace CondominiumParkingApi.Applications.Services
         private readonly IApartmentVehicleRepository _apartmentVehicleRepository;
         private readonly IParkingSpaceRepository _parkingSpaceRepository;
         private readonly IMapper _mapper;
+        private readonly IParkingSpaceService _parkingSpaceService;
         public ParkedService(IParkedRepository parkedRepository, 
             IApartmentVehicleRepository apartmentVehicleRepository,
             IParkingSpaceRepository parkingSpaceRepository,
-            IMapper mapper)
+            IMapper mapper,
+            IParkingSpaceService parkingSpaceService)
         {
             _parkedRepository = parkedRepository;
             _apartmentVehicleRepository = apartmentVehicleRepository;
             _parkingSpaceRepository = parkingSpaceRepository;
             _mapper = mapper;
+            _parkingSpaceService = parkingSpaceService;
         }
 
         public async Task<List<ParkedViewModel>> GetAll(bool active)
@@ -52,15 +55,24 @@ namespace CondominiumParkingApi.Applications.Services
         {
             try
             {
-                var vehicle = await _apartmentVehicleRepository.GetByIdAsync(entering.ApartmentVehicleId);
+                var vehicle = await _apartmentVehicleRepository.GetActiveLinkByVehicleIdWithInclusions(entering.VehicleId);
 
                 if (vehicle is null)
                     throw new NotFoundException($"ERR-PS002 O veículo solicitado não foi encontrado!");
 
-                var busySpace = await _parkedRepository.GetInUseByParkingSpaceId(entering.ParkingSpaceId);
+                var parkingSpaces = await _parkingSpaceService.GetAllParkingSpaces();
 
-                if (busySpace is not null)
-                    throw new BadRequestException($"ERR-PS003 A vaga {busySpace.ParkingSpace.Space} já está em uso!");
+                if (parkingSpaces is null)
+                    throw new NotFoundException($"ERR-PS002 Não foi encontrada nenhuma vaga no sistema!");
+
+                var space = parkingSpaces.FirstOrDefault(parkingSpace => parkingSpace.Id == entering.ParkingSpaceId);
+
+                if (space is null)
+                    throw new NotFoundException($"ERR-PS002 A vaga solicitada não foi encontrada!");
+                else if (!space.Free)
+                    throw new BadRequestException($"ERR-PS002 A vaga solicitada está em uso!");
+                else if (parkingSpaces.FirstOrDefault(a => a.Plate == vehicle.Vehicle.Plate) is not null)
+                    throw new BadRequestException($"ERR-PS002 O veículo solicitado ja está estacionado em outra vaga!");
 
                 var parked = new Parked();
 
